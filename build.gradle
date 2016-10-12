@@ -1,0 +1,39 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'com.celsius.rx'
+version = '1.0-SNAPSHOT'
+
+description = """rxjava-samples"""
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
+
+
+repositories {
+        
+     maven { url "http://repo.maven.apache.org/maven2" }
+}
+dependencies {
+    compile 'io.reactivex:rxjava:1.1.6'
+    compile 'org.projectlombok:lombok:1.12.6'
+
+    compile 'org.apache.logging.log4j:log4j-api:2.7'
+    compile 'org.apache.logging.log4j:log4j-core:2.7'
+
+    testCompile group: 'junit', name: 'junit', version:'3.8.1'
+}
+
+jar {
+    manifest {
+        attributes "Main-Class": "com.celsius.rx.ObservableSample"
+    }
+
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
